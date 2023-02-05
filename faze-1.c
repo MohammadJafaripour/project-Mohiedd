@@ -11,8 +11,11 @@
 int createfilenum=0;
 char *rootAddress = "C:/Users/Public/Documents/root/";
 ///////////////////////
-
 char **INP_ARG(char *);
+int strstrIdx(char* haystack, char* needle)
+{
+    return strstr(haystack, needle) - haystack;
+}
 
 char *substr(const char *String, long int last )
 {
@@ -73,6 +76,7 @@ bool Existance(char *filename)//
 /// Functions ///////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
 /// 
+
 char *createFile(char *FileName)
 {
     Folder(FileName);
@@ -438,6 +442,190 @@ char *grep(char **files, char *pattern, int options)
 
     return output;
 }
+/*char *find(char *address, char *str, int Kalame, int at, int count, int all)
+{
+    
+    if (Kalame)
+    {
+        FILE *file = fopen(address, "r");
+        char *line = calloc(256,8);
+        long long int Tool = 0,counter=0;
+        int List[2048] = {0};
+        
+        while (fgets(line, 256, file))
+
+        {
+            char *MMA = strtok(line, " ");
+
+            while (MMA != NULL)
+            {
+                if (!strcmp(MMA, str))
+                {
+                    List[counter] = Tool + 1;
+                    counter++;
+                }
+                Tool++;
+
+                MMA = strtok(NULL, " ");
+            }
+        }
+        if (count)
+        {
+            char *output = calloc(256, 1);
+            sprintf(output, "%d", counter);
+            return output;
+        }
+        if (counter <= 0)
+        {
+            return "None";
+        }
+
+        else if (at)
+        {
+            
+         if (all)
+        {
+            char *output = calloc(128 * 16, 1);
+            char *X = calloc(128, 1);
+            sprintf(X, "%d", List[0]);
+            strcat(output, X);
+            int i=0;
+            while ( i < counter)
+            {
+                sprintf(X, ", %d", List[i]);
+                strcat(output, X);
+                i++;
+            }
+            return output;
+        }
+       else if (counter < at)
+            {
+                return "At more than Possible!";
+            }
+            char *output = calloc(128, 1);
+            sprintf(output, "%i", List[at - 1]);
+            return output;
+        }
+        else
+        {
+            char *output = calloc(128, 1);
+            sprintf(output, "%d", List[0]);
+            return output;
+        }
+    }
+    if (!Kalame)
+    {
+        char *data = cat(address);
+        int strSize = strlen(str);
+        int;
+        int List[1024] = {0};
+       
+        long int firstFound = 0, Tool = 0 , counter = 0;
+        if (!strstrIdx(data, str))
+        {
+            firstFound = 1;
+            counter++;
+            List[0] = 0;
+        }
+        char *MMA = strtok(data, str);
+
+        while (MMA != NULL)
+        {
+            if (!((MMA[0] == '\n' || MMA[0] == ' ') && strlen(MMA) == 1))
+            {
+                
+                Tool += strlen(MMA);
+                List[counter++] = Tool + 1;
+                Tool += strSize;
+            }
+            MMA = strtok(NULL, str);
+        }
+        // counter--;
+        if (firstFound && counter != 1)
+           { counter--;}
+        if (counter > 1)
+            {counter--;}
+        if (count)
+        {
+            char *output = calloc(128, 1);
+            sprintf(output, "%d", counter);
+            return output;
+        }
+        else if (counter <= 0)
+        {
+            return "None!";
+        }
+        else if (at)
+        {
+            if (counter < at)
+            {
+                return "At exeeded!";
+            }
+            char *output = calloc(128, 1);
+            sprintf(output, "%d", List[at - 1] + 1);
+            return output;
+        }
+
+        else if (all)
+        {
+            char *output = calloc(256 * 16, 1);
+            char *X = calloc(256, 1);
+            sprintf(X, "%d", List[0] + 1);
+            strcat(output, X);
+            int i=1;
+            while( i < counter)
+            {
+                sprintf(X, ", %d", List[i] + 1);
+                strcat(output, X);
+                i++;
+            }
+            return output;
+        }
+        else
+        {
+            char *output = calloc(256, 1);
+            sprintf(output, "%d", List[0] + 1);
+            return output;
+        }
+    }
+}
+char *replace(char *address, char *str1, char *str2, int at, int all)
+{
+    long int size1 = strlen(str1);
+    if (at)
+    {
+        int charPos = atoi(find(address, str1, 0, at, 0, 0));
+        charPos--;
+        printf("%i", charPos);
+        char *data = calloc(4096, 1);
+        strcpy(data, cat(address));
+
+        long int line = 1, pos = 1, cntr = 0, i = 0;
+        while (cntr < charPos)
+        {
+            pos++;
+            if (data[i] == '\n')
+            {
+
+                line++;
+                pos = 1;
+                cntr -= 2;
+            }
+            cntr++;
+            i++;
+            
+        }
+        removestr(address, line, pos, size1, 'f');
+        insertstr(address, str2, line, pos);
+        if (!all)
+            return "Replaced";
+    }
+    if (!!strcmp(find(address, str1, 0, 0, 0, 0), "No results!"))
+    {
+        replace(address, str1, str2, 0, 1);
+    }
+    return "String has been replaced!";
+}*/
 
 char * sync(char **Argomanha)
 {
@@ -465,7 +653,7 @@ char * sync(char **Argomanha)
     
     else if (!strcmp(Command, "insertstr"))
     {
-        // needed
+        
         char *address = calloc(128,sizeof(char));
         int Insertline = 0, pos = 0;
         char *str = calloc(128,sizeof(char));
@@ -495,43 +683,29 @@ char * sync(char **Argomanha)
     }
     else if (!strcmp(Command, "cat"))
     {
-        // needed
+        
         char *address = malloc(128);
         //
-        char *argKey = Argomanha[1];
-            char *argVal = Argomanha[2];
-            if (!strcmp(argKey, "-file"))
+        char *Aval = Argomanha[1];
+            char *Dovom = Argomanha[2];
+            if (!strcmp(Aval, "-file"))
             {
-                strcpy(address, argVal);
+                strcpy(address, Dovom);
             }
 
-            argVal = Quotation(argVal);
+            Dovom = Quotation(Dovom);
 
-            if (!strcmp(argKey, "-file"))
+            if (!strcmp(Aval, "-file"))
             {
-                strcpy(address, argVal);
+                strcpy(address, Dovom);
             }
-        /*for (int i = 1; Argomanha[i] != NULL && Argomanha[i + 1] != NULL; i += 2)
-        {
-            
-            if (!strcmp(argKey, "-file"))
-            {
-                strcpy(address, argVal);
-            }
-
-            argVal = Quotation(argVal);
-
-            if (!strcmp(argKey, "-file"))
-            {
-                strcpy(address, argVal);
-            }
-        }*/
+        
         return cat(AddressComplete(address));
     }
     else if (!strcmp(Command, "removestr"))
     {
 
-        // needed
+        
         char *address = malloc(128);
         int removeline = 0, pos = 0;
         long long size = 0;
@@ -569,7 +743,7 @@ char * sync(char **Argomanha)
     }
     else if (!strcmp(Command, "copystr"))
     {
-        // needed
+        
         char *address = malloc(256);
         int Copyline = 0, pos = 0;
         long long size = 0;
@@ -616,7 +790,7 @@ char * sync(char **Argomanha)
     }
 else if (!strcmp(Command, "cutstr"))
     {
-        // needed
+        
         char *address = malloc(128);
         int Cutline = 0, pos = 0, size = 0;
         char p='p';
@@ -659,7 +833,7 @@ else if (!strcmp(Command, "cutstr"))
     }
     else if (!strcmp(Command, "pastestr"))
     {
-        // needed
+        
         char *address = malloc(128);
         long long int pasteline = 0, pos = 0;
         //
@@ -687,7 +861,7 @@ else if (!strcmp(Command, "cutstr"))
     else if (!strcmp(Command, "grep"))
     {
 
-        // needed
+        
         char *inp = calloc(256,sizeof(char));
         int _ds = 0;
         char **List = calloc(64 , sizeof(char *));
@@ -730,7 +904,106 @@ else if (!strcmp(Command, "cutstr"))
         
         return grep(List, inp, _ds);
     }
-    
+    /*else if (!strcmp(Command, "find"))
+    {
+        
+        char *address = calloc(128,1);
+        char *str = calloc(128,1);
+        int byword = 0, at = 0, count = 0, all = 0;
+
+        
+        int i=1;
+        while (Argomanha[i] != NULL && Argomanha[i + 1] != NULL)
+        {
+            char *Aval = Argomanha[i];
+            char *Dovom = Argomanha[i + 1];
+
+            Dovom = Quotation(Dovom);
+
+            if (!strcmp(Aval, "-file"))
+            {
+                strcpy(address, Dovom);
+            }
+            if (!strcmp(Aval, "-str"))
+            {
+                strcpy(str, Dovom);
+            }
+            i+=2;
+        }
+         i = 5;
+        while (Argomanha[i] != NULL)
+        {
+            // printf("-{%s}-\n", Argomanha[i]);
+            if (!strcmp(Argomanha[i], "-count"))
+            {
+                count = 1;
+            }
+            if (!strcmp(Argomanha[i], "-at"))
+            {
+                sscanf(Argomanha[i + 1], "%i", &at);
+                i++;
+            }
+             if (!strcmp(Argomanha[i], "-byword"))
+            {
+                byword = 1;
+            }
+            if (!strcmp(Argomanha[i], "-all"))
+            {
+                all = 1;
+            }
+
+
+            i++;
+        }
+        return find(AddressComplete(address), str, byword, at, count, all);
+    }
+        else if (!strcmp(Command, "replace"))
+    {
+        
+        char *address = malloc(128);
+        char *str1 = malloc(128);
+        char *str2 = malloc(128);
+        int at = 0, all = 0;
+        int i=1;
+        while ( Argomanha[i] != NULL && Argomanha[i + 1] != NULL)
+        {
+            char *Aval = Argomanha[i];
+            char *Dovom = Argomanha[i + 1];
+
+            Dovom = Quotation(Dovom);
+
+            if (!strcmp(Aval, "-file"))
+            {
+                strcpy(address, Dovom);
+            }
+            if (!strcmp(Aval, "-str1"))
+            {
+                strcpy(str1, Dovom);
+            }
+            if (!strcmp(Aval, "-str2"))
+            {
+                strcpy(str2, Dovom);
+            }
+            i += 2;
+        }
+         i = 5;
+        while (Argomanha[i] != NULL)
+        {
+
+            if (!strcmp(Argomanha[i], "-at"))
+            {
+                sscanf(Argomanha[i + 1], "%d", &at);
+                i++;
+            }
+            else if (!strcmp(Argomanha[i], "-all"))
+            {
+                all = 1;
+            }
+
+            i++;
+        }
+        return replace(AddressComplete(address), str1, str2, at, all);
+    }*/
     
 }
 
